@@ -16,8 +16,19 @@
       <table border="1" class="table table-striped table-responsive-md">
         <thead>
         <tr>
-            <th>Student Name</th>
-            <th>Student Age</th>
+<!--            Commenting below table header to add hyperlink for sorting by student name-->
+<!--            <th>Student Name</th>-->
+<!--            <th>Student Age</th>-->
+            <th>
+                <a th:href="@{'/page/' + ${currentPage} + '?sortField=name&sortDirection=' + ${reverseSortDirection}}">
+                    Student Name
+                </a>
+            </th>
+            <th>
+                <a th:href="@{'/page/' + ${currentPage} + '?sortField=age&sortDirection=' + ${reverseSortDirection}}">
+                Student Age
+            </a>
+            </th>
             <th> Actions </th>
         </tr>
         </thead>
@@ -37,16 +48,19 @@
             </div>
             <div class="col-sm-1">
                 <span th:each="i: ${#numbers.sequence(1,totalPages)}">
-                    <a th:if="${currentPage !=i}" th:href="@{'/page/' + ${i}}">[[${i}]]</a>
+<!--                    <a th:if="${currentPage !=i}" th:href="@{'/page/' + ${i}}">[[${i}]]</a>-->
+                     <a th:if="${currentPage !=i}" th:href="@{'/page/' + ${i} + '?sortField=' +${sortField} + '&sortDirection=' + ${sortDirection}}">[[${i}]]</a>
                     <span th:unless="${currentPage !=i}">[[${i}]]</span> &nbsp; &nbsp; &nbsp;
                 </span>
             </div>
             <div class="col-sm-1">
-                <a th:if="${currentPage < totalPages}" th:href="@{'/page/' +${currentPage +1}}">Next</a>
+<!--                <a th:if="${currentPage < totalPages}" th:href="@{'/page/' +${currentPage +1}}">Next</a>-->
+                <a th:if="${currentPage < totalPages}" th:href="@{'/page/' +${currentPage +1} + '?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">Next</a>
                 <span th:unless="${currentPage < totalPages}">Next</span> &nbsp; &nbsp;
             </div>
             <div class="col-sm-1">
-                <a th:if="${currentPage < totalPages}" th:href="@{'/page/' +${totalPages}}">Last</a>
+<!--                <a th:if="${currentPage < totalPages}" th:href="@{'/page/' +${totalPages}}">Last</a>-->
+                <a th:if="${currentPage < totalPages}" th:href="@{'/page/' +${totalPages} + '?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">Last</a>
                 <span th:unless="${currentPage < totalPages}">Last</span>
             </div>
         </div>

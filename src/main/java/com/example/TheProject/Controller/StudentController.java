@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,9 +16,15 @@ public class StudentController {
     private StudentService service;
     @GetMapping("/")
     public String viewPage(Model model){
+//        Commented for pagination code
 //        model.addAttribute("listOfStudents",service.getAllStudents());
 //        return"index";
-      return  viewPagination(1,model);
+
+//        Commented for adding sorting with pagination code
+//        return  viewPagination(1,model);
+
+        return  viewPagination(1, "name", "asc",model);
+
     }
 
     @GetMapping("/showNewStudentForm")
@@ -47,13 +50,29 @@ public class StudentController {
         return "redirect:/";
     }
     @GetMapping("/page/{pageNumber}")
-    public String viewPagination(@PathVariable (value= "pageNumber") int pageNumber , Model model){
+
+//    Commenting for adding sorting feature with pagination
+//    public String viewPagination(@PathVariable (value= "pageNumber") int pageNumber , Model model){
+
+    public String viewPagination(@PathVariable (value= "pageNumber") int pageNumber ,
+                                 @RequestParam("sortField") String sortField,
+                                 @RequestParam("sortDirection") String sortDirection,
+                                 Model model){
         int pageSize= 5;
-        Page<StudentOne> page= service.findPaginated(pageNumber, pageSize);
+//        Commenting for adding sorting feature with pagination
+//        Page<StudentOne> page= service.findPaginated(pageNumber, pageSize);
+
+        Page<StudentOne> page= service.findPaginated(pageNumber, pageSize,sortField, sortDirection);
         List<StudentOne> listStudents = page.getContent();
         model.addAttribute("currentPage", pageNumber);
         model.addAttribute("totalPages",page.getTotalPages());
         model.addAttribute("totalItems",page.getTotalElements());
+
+        //Adding these 3 attributers for sorting feature
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDirection",sortDirection);
+        model.addAttribute("reverseSortDirection",sortDirection.equals("asc") ? "desc" : "asc");
+
         model.addAttribute("listOfStudents",listStudents);
         return "index";
     }

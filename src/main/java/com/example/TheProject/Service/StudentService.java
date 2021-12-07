@@ -13,5 +13,8 @@ public interface StudentService {
     void saveStudent(StudentOne student);
     StudentOne getStudentById(long Id);
     void deleteStudentById (long id);
-    Page<StudentOne> findPaginated(int pageNumber, int pageSize);
+// Commenting below method to add sorting feature with pagination
+//    Page<StudentOne> findPaginated(int pageNumber, int pageSize);
+    Page<StudentOne> findPaginated(int pageNumber, int pageSize, String sortField, String sortDirection);
+
 }
