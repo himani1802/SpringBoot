@@ -1,6 +1,7 @@
 package com.example.TheProject.Service;
 
 import com.example.TheProject.Model.StudentOne;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 
@@ -12,4 +13,5 @@ public interface StudentService {
     void saveStudent(StudentOne student);
     StudentOne getStudentById(long Id);
     void deleteStudentById (long id);
+    Page<StudentOne> findPaginated(int pageNumber, int pageSize);
 }
