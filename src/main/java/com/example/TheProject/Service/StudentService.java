@@ -9,4 +9,7 @@ import java.util.List;
 @Service
 public interface StudentService {
     List<StudentOne> getAllStudents();
+    void saveStudent(StudentOne student);
+    StudentOne getStudentById(long Id);
+    void deleteStudentById (long id);
 }
